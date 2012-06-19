@@ -31,11 +31,11 @@ class UserRepository implements Serializable {
     }
 
     Collection<User> getUsers() {
-        def cqlQuery =
-        new CqlQuery(keyspace, StringSerializer.get(), StringSerializer.get(), StringSerializer.get())
+        def cqlQuery = new CqlQuery(keyspace, StringSerializer.get(), StringSerializer.get(), StringSerializer.get())
 
         cqlQuery.setQuery("SELECT * FROM User")
-        CqlRows<String, String, String> rows = cqlQuery.execute().get()
+        def rows = cqlQuery.execute().get()
+
         def users = new java.util.ArrayList<User>()
         rows.each { row ->
             users.add(new User(login: row.getKey(),
