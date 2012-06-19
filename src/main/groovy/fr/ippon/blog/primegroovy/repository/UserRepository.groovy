@@ -34,7 +34,7 @@ class UserRepository implements Serializable {
         def cqlQuery =
             new CqlQuery(keyspace, StringSerializer.get(), StringSerializer.get(), StringSerializer.get())
 
-        def rows = cqlQuery.setQuery "SELECT * FROM User" execute() get()
+        def rows = cqlQuery.setQuery("SELECT * FROM User").execute().get()
 
         return rows.collect { Row row ->
             new User(login:     row.key,
