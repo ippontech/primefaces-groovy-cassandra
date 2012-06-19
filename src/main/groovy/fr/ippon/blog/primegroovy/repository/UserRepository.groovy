@@ -12,6 +12,9 @@ import me.prettyprint.cassandra.service.ThriftCluster
 import me.prettyprint.hector.api.factory.HFactory
 import me.prettyprint.hector.api.Keyspace
 import me.prettyprint.hector.api.beans.Row
+import groovy.transform.CompileStatic
+import me.prettyprint.cassandra.model.CqlRows
+import groovy.transform.TypeChecked
 
 /**
  * Access to the Cassandra User CF.
@@ -19,6 +22,7 @@ import me.prettyprint.hector.api.beans.Row
 @Named("userRepository")
 @ApplicationScoped
 @Startup
+@CompileStatic
 class UserRepository implements Serializable {
 
     Keyspace keyspace
@@ -37,11 +41,11 @@ class UserRepository implements Serializable {
         def rows = cqlQuery.setQuery("SELECT * FROM User").execute().get()
 
         return rows.collect { Row row ->
-            new User(login:     row.key,
-                    username:   row.columnSlice.getColumnByName("username" ).value,
-                    domain:     row.columnSlice.getColumnByName("domain"   ).value,
-                    firstName:  row.columnSlice.getColumnByName("firstName").value,
-                    lastName:   row.columnSlice.getColumnByName("lastName" ).value)
+            new User(login:     row.getKey(),
+                    username:   row.getColumnSlice().getColumnByName("username" ).value,
+                    domain:     row.getColumnSlice().getColumnByName("domain"   ).value,
+                    firstName:  row.getColumnSlice().getColumnByName("firstName").value,
+                    lastName:   row.getColumnSlice().getColumnByName("lastName" ).value)
         }
     }
 }
