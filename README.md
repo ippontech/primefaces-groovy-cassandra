@@ -3,6 +3,8 @@ primefaces-groovy-cassandra
 
 Sample application showcasing Primefaces + CDI + Groovy + Cassandra integration, by [Ippon Technologies](http://www.ippon.fr).
 
+Some updates to the initial code base made by [Guillaume Laforge](http://glaforge.appspot.com)
+
 License
 -------
 

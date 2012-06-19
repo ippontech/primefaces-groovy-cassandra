@@ -10,7 +10,8 @@ import me.prettyprint.cassandra.serializers.StringSerializer
 import me.prettyprint.cassandra.service.CassandraHostConfigurator
 import me.prettyprint.cassandra.service.ThriftCluster
 import me.prettyprint.hector.api.factory.HFactory
-import me.prettyprint.cassandra.model.CqlRows
+import me.prettyprint.hector.api.Keyspace
+import me.prettyprint.hector.api.beans.Row
 
 /**
  * Access to the Cassandra User CF.
@@ -20,7 +21,7 @@ import me.prettyprint.cassandra.model.CqlRows
 @Startup
 class UserRepository implements Serializable {
 
-    def keyspace
+    Keyspace keyspace
 
     @PostConstruct
     void init() {
@@ -31,18 +32,18 @@ class UserRepository implements Serializable {
 
     Collection<User> getUsers() {
         def cqlQuery =
-        new CqlQuery(keyspace, StringSerializer.get(), StringSerializer.get(), StringSerializer.get())
+            new CqlQuery(keyspace, StringSerializer.get(), StringSerializer.get(), StringSerializer.get())
 
-        cqlQuery.setQuery("SELECT * FROM User")
-        CqlRows<String, String, String> rows = cqlQuery.execute().get()
-        def users = new java.util.ArrayList<User>()
-        rows.each { row ->
-            users.add(new User(login: row.getKey(),
-                    username: row.getColumnSlice().getColumnByName("username").getValue(),
-                    domain: row.getColumnSlice().getColumnByName("domain").getValue(),
-                    firstName: row.getColumnSlice().getColumnByName("firstName").getValue(),
-                    lastName: row.getColumnSlice().getColumnByName("lastName").getValue()))
+        def rows = cqlQuery.setQuery("SELECT * FROM User").execute().get()
+
+        return rows.collect { Row row ->
+            new User(
+                    login:      row.key,
+                    username:   row.columnSlice.getColumnByName("username").value,
+                    domain:     row.columnSlice.getColumnByName("domain").value,
+                    firstName:  row.columnSlice.getColumnByName("firstName").value,
+                    lastName:   row.columnSlice.getColumnByName("lastName").value
+            )
         }
-        return users
     }
 }

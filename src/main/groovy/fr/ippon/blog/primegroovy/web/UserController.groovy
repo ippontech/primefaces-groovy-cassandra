@@ -16,7 +16,7 @@ class UserController implements Serializable {
 
     @PostConstruct
     void init() {
-        users = userRepository.getUsers()
+        users = userRepository.users
     }
 
     Collection<User> users
