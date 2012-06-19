@@ -1,4 +1,4 @@
-primefaces-scala-cassandra
+primefaces-groovy-cassandra
 ==========================
 
 Sample application showcasing Primefaces + CDI + Groovy + Cassandra integration, by [Ippon Technologies](http://www.ippon.fr).
