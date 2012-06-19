@@ -11,6 +11,7 @@ import me.prettyprint.cassandra.service.CassandraHostConfigurator
 import me.prettyprint.cassandra.service.ThriftCluster
 import me.prettyprint.hector.api.factory.HFactory
 import me.prettyprint.cassandra.model.CqlRows
+import me.prettyprint.hector.api.Keyspace
 
 /**
  * Access to the Cassandra User CF.
@@ -20,7 +21,7 @@ import me.prettyprint.cassandra.model.CqlRows
 @Startup
 class UserRepository implements Serializable {
 
-    def keyspace
+    Keyspace keyspace
 
     @PostConstruct
     void init() {
