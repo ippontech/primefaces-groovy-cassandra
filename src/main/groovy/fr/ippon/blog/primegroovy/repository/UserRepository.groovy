@@ -36,14 +36,14 @@ class UserRepository implements Serializable {
         cqlQuery.setQuery("SELECT * FROM User")
         def rows = cqlQuery.execute().get()
 
-        def users = new java.util.ArrayList<User>()
-        rows.each { row ->
-            users.add(new User(login: row.getKey(),
+        def users = rows.collect {
+            new User(login: row.getKey(),
                     username: row.getColumnSlice().getColumnByName("username").getValue(),
                     domain: row.getColumnSlice().getColumnByName("domain").getValue(),
                     firstName: row.getColumnSlice().getColumnByName("firstName").getValue(),
-                    lastName: row.getColumnSlice().getColumnByName("lastName").getValue()))
+                    lastName: row.getColumnSlice().getColumnByName("lastName").getValue())
         }
+
         return users
     }
 }
