@@ -40,12 +40,18 @@ class UserRepository implements Serializable {
 
         def rows = cqlQuery.setQuery("SELECT * FROM User").execute().get()
 
-        return rows.collect { Row row ->
-            new User(login:     row.getKey(),
-                    username:   row.getColumnSlice().getColumnByName("username" ).value,
-                    domain:     row.getColumnSlice().getColumnByName("domain"   ).value,
-                    firstName:  row.getColumnSlice().getColumnByName("firstName").value,
-                    lastName:   row.getColumnSlice().getColumnByName("lastName" ).value)
+        def users = []
+
+        for (Row row in rows) {
+            def user = new User()
+            user.login      = row.getKey()
+            user.username   = row.getColumnSlice().getColumnByName("username").value
+            user.domain     = row.getColumnSlice().getColumnByName("domain").value
+            user.firstName  = row.getColumnSlice().getColumnByName("firstName").value
+            user.lastName   = row.getColumnSlice().getColumnByName("lastName").value
+            users << user
         }
+
+        return users
     }
 }
