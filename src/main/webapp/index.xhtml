@@ -1,0 +1,36 @@
+<html xmlns="http://www.w3c.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+</h:head>
+<h:body>
+    <h:form id="form">
+
+        <p:dataTable var="user" value="#{userController.users}" paginator="true" rows="10"
+                     paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                     rowsPerPageTemplate="5,10,15" id="userTable">
+
+            <p:column headerText="Login" sortBy="#{user.login}" filterBy="#{user.login}">
+                <h:outputText value="#{user.login}" />
+            </p:column>
+
+            <p:column headerText="Username" sortBy="#{user.username}" filterBy="#{user.username}">
+                <h:outputText value="#{user.username}" />
+            </p:column>
+
+            <p:column headerText="Domain" sortBy="#{user.domain}" filterBy="#{user.domain}">
+                <h:outputText value="#{user.domain}" />
+            </p:column>
+
+            <p:column headerText="Fist Name" sortBy="#{user.firstName}" filterBy="#{user.firstName}">
+                <h:outputText value="#{user.firstName}" />
+            </p:column>
+
+            <p:column headerText="Last Name" sortBy="#{user.lastName}" filterBy="#{user.lastName}">
+                <h:outputText value="#{user.lastName}" />
+            </p:column>
+        </p:dataTable>
+
+    </h:form>
+</h:body>
+</html>
