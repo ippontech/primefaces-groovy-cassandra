@@ -6,11 +6,9 @@ import javax.enterprise.context.SessionScoped
 import javax.inject.Inject
 import javax.inject.Named
 import javax.annotation.PostConstruct
-import groovy.transform.CompileStatic
 
 @Named("userController")
 @SessionScoped
-@CompileStatic
 class UserController implements Serializable {
 
     @Inject
