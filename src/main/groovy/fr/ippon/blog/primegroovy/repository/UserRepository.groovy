@@ -1,35 +1,33 @@
 package fr.ippon.blog.primegroovy.repository
 
 import fr.ippon.blog.primegroovy.domain.User
-import javax.annotation.PostConstruct
-import javax.ejb.Startup
-import javax.enterprise.context.ApplicationScoped
-import javax.inject.Named
 import me.prettyprint.cassandra.model.CqlQuery
 import me.prettyprint.cassandra.serializers.StringSerializer
 import me.prettyprint.cassandra.service.CassandraHostConfigurator
 import me.prettyprint.cassandra.service.ThriftCluster
-import me.prettyprint.hector.api.factory.HFactory
 import me.prettyprint.hector.api.Keyspace
 import me.prettyprint.hector.api.beans.Row
+import me.prettyprint.hector.api.factory.HFactory
+
+import javax.enterprise.context.ApplicationScoped
+import javax.enterprise.inject.Produces
 
 /**
  * Access to the Cassandra User CF.
  */
-@Named("userRepository")
 @ApplicationScoped
-@Startup
 class UserRepository implements Serializable {
 
     Keyspace keyspace
 
-    @PostConstruct
-    void init() {
+    UserRepository() {
         keyspace = HFactory.createKeyspace("tatami",
-                new ThriftCluster("Tatami cluster",
-                        new CassandraHostConfigurator("localhost")))
+                        new ThriftCluster("Tatami cluster",
+                                new CassandraHostConfigurator("localhost")))
     }
 
+
+    @Produces
     Collection<User> getUsers() {
         def cqlQuery =
             new CqlQuery(keyspace, StringSerializer.get(), StringSerializer.get(), StringSerializer.get())
