@@ -5,6 +5,8 @@ Sample application showcasing Primefaces + CDI + Groovy + Cassandra integration,
 
 Some updates to the initial code base made by [Guillaume Laforge](http://glaforge.appspot.com)
 
+You can directly launch the application by entering mvn -Pjetty-run in the command line
+
 License
 -------
 
