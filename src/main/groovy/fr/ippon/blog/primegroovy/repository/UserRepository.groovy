@@ -22,10 +22,9 @@ class UserRepository implements Serializable {
 
     UserRepository() {
         keyspace = HFactory.createKeyspace("tatami",
-                        new ThriftCluster("Tatami cluster",
-                                new CassandraHostConfigurator("localhost")))
+                new ThriftCluster("Tatami cluster",
+                        new CassandraHostConfigurator("localhost")))
     }
-
 
     @Produces
     Collection<User> getUsers() {
